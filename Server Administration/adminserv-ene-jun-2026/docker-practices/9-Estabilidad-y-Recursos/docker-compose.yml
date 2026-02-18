@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8085:3000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'     # Máximo 50% de un núcleo de CPU
+          memory: 50M      # Máximo 50 Megabytes de RAM
+    restart: always        # Reiniciar automáticamente si el contenedor falla
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s        # Revisar cada 10 segundos
+      timeout: 5s          # Tiempo de espera para la respuesta
+      retries: 3           # Reintentos antes de marcar como "unhealthy"
+      start_period: 5s     # Tiempo de gracia al iniciar

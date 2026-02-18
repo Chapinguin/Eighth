@@ -1,0 +1,19 @@
+services:
+   db:
+     image: mariadb:11
+     restart: always
+     environment:
+       MARIADB_DATABASE: wordpress
+       MARIADB_USER: wordpress
+       MARIADB_PASSWORD: password
+       MARIADB_RANDOM_ROOT_PASSWORD: '1'
+
+   wordpress:
+     image: wordpress:6
+     restart: always
+     ports:
+       - 8081:80
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: password
